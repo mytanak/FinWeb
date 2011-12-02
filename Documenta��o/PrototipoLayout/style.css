@@ -1,0 +1,116 @@
+
+	
+#geral2{
+	width: 598px;
+	margin: 3em auto;
+	
+}	
+	
+#topo{
+	width: 598px;
+	height: 120px;
+	background: #ccc;
+	background: url(topo.jpg);
+
+	}
+	
+#menu-superior{
+	width: 598px;
+	height: 30px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #FFFFFF;
+	padding-top: 10px;
+	background: url(menu.jpg);
+}	
+
+
+#conteudo{
+	width: 598px;
+	height: 350px;
+	background: #ffffff;
+	}	
+	
+#rodape{
+    width: 598px;
+	height: 30px;
+	background: url(rodape.jpg);
+	font-family: Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	font-size:9px;
+}
+
+ul.menubar{
+  margin: 0px;
+  padding: 5px;
+  font-size: 100%;
+}
+ 
+ul.menubar .submenu{
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  display:inline;
+}
+ 
+ul.menubar ul.menu{
+  display: none;
+  position: absolute;
+  margin: 0px 0px 0px 170px;
+}
+ 
+ul.menubar a{
+  padding: 5px;
+  text-decoration: none;
+  color: #FFFFFF;
+  padding: 5px;
+}
+ 
+ul.menu, ul.menu ul{
+  margin: 0;
+  padding: 0;
+
+
+}
+ 
+ul.menu li{
+  position: relative;
+  list-style: none;
+  border: 0px;
+}
+ 
+ul.menu li a{
+  display: block;
+  text-decoration: none;
+  border-bottom: 0px;
+  color: #ffffff;
+  padding: 5px 10px 5px 5px;
+  background: #17524c;
+}
+ 
+ul.menu li sup{
+  font-weight:bold;
+  font-size:7px;
+
+}
+ 
+/* Fix IE. Hide from IE Mac \*/
+* html ul.menu li { float: left; height: 1%; }
+* html ul.menu li a { height: 1%; }
+/* End */
+ 
+ul.menu ul{
+  position: absolute;
+  display: none;
+  left: 149px; /* Set 1px less than menu width */
+  top: 0px;
+}
+ 
+ul.menu li.submenu ul { display: none; } /* Hide sub-menus initially */
+ 
+ul.menu li.submenu { background: transparent url(arrow.gif) right center no-repeat; }
+ 
+ul.menu li a:hover { color: #7cefb41; }	
+
+
+	

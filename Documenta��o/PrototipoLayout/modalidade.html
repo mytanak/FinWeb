@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sistemas Despesas Gerais</title>
+<style type="text/css">
+@import url("style.css");
+</style>
+
+<script type="text/javascript">
+function horizontal() {
+ 
+   var navItems = document.getElementById("menu_dropdown").getElementsByTagName("li");
+    
+   for (var i=0; i< navItems.length; i++) {
+      if(navItems[i].className == "submenu")
+      {
+         if(navItems[i].getElementsByTagName('ul')[0] != null)
+         {
+            navItems[i].onmouseover=function() {this.getElementsByTagName('ul')[0].style.display="block";this.style.backgroundColor = "#";}
+            navItems[i].onmouseout=function() {this.getElementsByTagName('ul')[0].style.display="none";this.style.backgroundColor = "#";}
+         }
+      }
+   }
+ 
+}
+ 
+</script>
+
+</head>
+
+<body bgcolor="#7cefb4" onload="horizontal();">
+	<div id="geral">
+    <div id="geral2" align="center">
+    	<div id="topo"></div>
+        <div id="menu-superior">
+        <ul id="menu_dropdown" class="menubar">
+			<li class="submenu"><a href="index.html">Home</a></li>
+            <li class="submenu"><a href="#">Cadastros</a>
+      			<ul class="menu">
+        			<li><a href="conta.html">Conta</a></li>
+        			<li><a href="fornecedor.html">Fornecedor</a></li>
+        			<li><a href="grupo.html">Grupo</a></li>
+        			<li><a href="lancamento.html">Lançamento</a></li>
+    				<li><a href="modalidade.html">Modalidade</a></li>
+                    <li><a href="operacao.html">Operação</a></li>
+                    <li><a href="usuario.html">Usuário</a></li>
+      			</ul>
+            </li>
+                <li class="submenu"><a href="lancamento2.html">Lançamentos</a></li>
+                <li class="submenu"><a href="relatorio.html">Relatórios</a></li>
+			</ul>
+        
+        </div>
+        <div id="conteudo"></div>
+        <div id="rodape"><div style="padding-top:7px !important;">Copyright © 2011 Todos os direitos reservados.</div></div>
+    </div> 
+    </div> 
+</body>
+</html>
