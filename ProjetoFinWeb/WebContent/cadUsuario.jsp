@@ -2,14 +2,20 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib tagdir="/WEB-INF/tags/layout" prefix="layout" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<layout:page usuario="${login}" title="Cadastro de Usuários" description="Cadastro de Usuários" keywords="usuário">
+<layout:page usuario="${login}" title="Cadastrar Usuário" description="Cadastrar Usuário" keywords="usuário">
+	<c:if test="${login == null or login != 'Admin'}">
+		<c:redirect url="index.jsp"/>
+	</c:if>
     <c:if test="${login != null}">
-    <c:if test="${login == 'Admin'}">
     <jsp:body>
-    <form name="usuario" action="GravarUsuario" method="post">
+    <div id="content">
+	<c:if test="${msg != null}">
+	<p class="msg">${msg}</p>
+	</c:if>
+    <form id="formUsuario" name="usuario" action="GravarUsuario" method="post">
 		<FIELDSET>
-		<LEGEND>Cadastro de Usuarios</LEGEND>
-			<table>
+		<LEGEND>Cadastrar Usuario</LEGEND>
+			<table class="normal">
 				<tr>
 					<td>
     					<LABEL accessKey=1 for=idUsuario>Identificação:</LABEL>
@@ -31,12 +37,20 @@
 				    	<LABEL accessKey=3 for=senha>Senha:</LABEL>
 				    </td>
 				    <td align="left">				    	
-				    	<input type="password" name="senha" size="10" />
+				    	<input id="senha" type="password" name="senha" size="10" />
+				    </td>
+				</tr>
+		    	<tr>
+		    		<td>
+				    	<LABEL accessKey=4 for=confirmeSenha>Confirme a Senha:</LABEL>
+				    </td>
+				    <td align="left">				    	
+				    	<input type="password" name="confirmeSenha" size="10" />
 				    </td>
 				</tr>
 				<tr>
 				    <td>				    	
-				    	<LABEL accessKey=4 for=email>E-mail:</LABEL> 
+				    	<LABEL accessKey=5 for=email>E-mail:</LABEL> 
 				    </td>
 				    <td align="left">
 				    	<input type="text" name="email" size="50" />
@@ -44,7 +58,7 @@
 				</tr>
 				<tr>
 					<td>				    
-				    	<LABEL accessKey=5 for=dataNascimento>Data Nascimento:</LABEL>
+				    	<LABEL accessKey=6 for=dataNascimento>Data Nascimento:</LABEL>
 				    </td>
 				    <td align="left"> 
 				    	<input class="mask-data" type="text" name="dataNascimento" size="10" />
@@ -52,19 +66,18 @@
 				</tr>
 				
     		</table>
-			<table align="right">
+			<table align="right" class="normal">
     			<tr>
 					<td>
 				    	<BUTTON class=botao name=gravar type=submit>Gravar</BUTTON>
-				    	<BUTTON class=botao name=cancelar type=reset>Cancelar</BUTTON>
-				    	<A class=botao href="home.jsp">Voltar</A>
+				    	<BUTTON class=botao name=limpar type=reset>Limpar</BUTTON>
+				    	<A class=botao href="listarUsuario.jsp">Cancelar</A>
 				    </td>				    
 				</tr>
 			</table> 
 		</FIELDSET>
 	</form>
-		
+	</div>	
     </jsp:body>
-    </c:if>
     </c:if>
 </layout:page>

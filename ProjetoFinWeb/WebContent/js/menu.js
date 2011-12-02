@@ -1,16 +1,7 @@
-function horizontal() {
- 
-   var navItems = document.getElementById("menu_dropdown").getElementsByTagName("li");
-    
-   for (var i=0; i< navItems.length; i++) {
-      if(navItems[i].className == "submenu")
-      {
-         if(navItems[i].getElementsByTagName('ul')[0] != null)
-         {
-            navItems[i].onmouseover=function() {this.getElementsByTagName('ul')[0].style.display="block";this.style.backgroundColor = "#";}
-            navItems[i].onmouseout=function() {this.getElementsByTagName('ul')[0].style.display="none";this.style.backgroundColor = "#";}
-         }
-      }
-   }
- 
-}
+ddsmoothmenu.init({
+	mainmenuid: "smoothmenu1", //menu DIV id
+	orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+	classname: 'ddsmoothmenu', //class added to menu's outer DIV
+	//customtheme: ["#1c5a80", "#18374a"],
+	contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+})

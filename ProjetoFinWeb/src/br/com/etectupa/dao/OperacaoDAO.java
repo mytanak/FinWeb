@@ -99,6 +99,33 @@ public class OperacaoDAO {
 		return operacao;
 	}
 
+	public Operacao listarUnico(String descricao) {
+		Operacao operacao = new Operacao();
+		String sql = "SELECT * FROM Operacao " 
+		          + " WHERE descricao = ?";
+
+		try {
+			Conecta conn = Conecta.getInstance();
+			Connection conexao = conn.getConnection();
+			PreparedStatement stmt = conexao.prepareStatement(sql);
+			stmt.setString(1, descricao);
+
+			ResultSet rs = stmt.executeQuery();
+
+			rs.next();
+
+			operacao.setCodOperacao(rs.getInt("codOperacao"));
+			operacao.setCodGrupo(rs.getInt("codGrupo"));
+			operacao.setDescricao(rs.getString("descricao"));
+			operacao.setTipo(rs.getString("tipo"));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return operacao;
+	}
+
 	public List<Operacao> getLista() {
 		ArrayList<Operacao> operacaos = new ArrayList<Operacao>();
 		String sql = "SELECT * FROM Operacao";
@@ -125,4 +152,34 @@ public class OperacaoDAO {
 
 		return operacaos;
 	}
+	
+	public List<Operacao> listarOperacoes(int codGrupo) {
+		ArrayList<Operacao> operacoes = new ArrayList<Operacao>();
+		String sql = "SELECT * FROM Operacao" +
+				     " WHERE codGrupo = ?";
+
+		try {
+			Conecta conn = Conecta.getInstance();
+			Connection conexao = conn.getConnection();
+			PreparedStatement stmt = conexao.prepareStatement(sql);
+			stmt.setInt(1, codGrupo);
+
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Operacao operacao = new Operacao();
+				operacao.setCodOperacao(rs.getInt("codOperacao"));
+				operacao.setCodGrupo(rs.getInt("codGrupo"));
+				operacao.setDescricao(rs.getString("descricao"));
+				operacao.setTipo(rs.getString("tipo"));
+								
+				operacoes.add(operacao);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return operacoes;
+	}
+	
 }

@@ -1,0 +1,54 @@
+.ddsmoothmenu {
+	background: url(/ProjetoFinWeb/img/menu.jpg); font: bold 12px/normal Verdana; width: 100%; font-size-adjust: none; font-stretch: normal; 
+}
+.ddsmoothmenu ul {
+	margin: 0px; padding: 0px; list-style-type: none; z-index: 100; 
+}
+.ddsmoothmenu ul li {
+	float: left; display: inline; position: relative;
+}
+.ddsmoothmenu ul li a {
+	background: url(/ProjetoFinWeb/img/menu.jpg); padding: 8px 10px; color: rgb(45, 43, 43); text-decoration: none; border-right-color: rgb(119, 119, 136); border-right-width: 1px; border-right-style: solid; display: block;
+}
+* html .ddsmoothmenu ul li a {
+	display: inline-block;
+}
+.ddsmoothmenu ul li a:link {
+	color: white;
+}
+.ddsmoothmenu ul li a:visited {
+	color: white;
+}
+.ddsmoothmenu ul li a.selected {
+	background: #17524c; color: white;
+}
+.ddsmoothmenu ul li a:hover {
+	background: #17524c; color: white;
+}
+.ddsmoothmenu ul li ul {
+	left: 0px; display: none; visibility: hidden; position: absolute;
+}
+.ddsmoothmenu ul li ul li {
+	float: none; display: list-item;
+}
+.ddsmoothmenu ul li ul li ul {
+	top: 0px;
+}
+.ddsmoothmenu ul li ul li a {
+	font: 13px/normal Verdana; margin: 0px; padding: 5px; width: 160px; border-bottom-color: gray; border-top-width: 0px; border-bottom-width: 1px; border-bottom-style: solid; font-size-adjust: none; font-stretch: normal;
+}
+* html .ddsmoothmenu {
+	height: 1%;
+}
+.downarrowclass {
+	top: 12px; right: 7px; position: absolute;
+}
+.rightarrowclass {
+	top: 6px; right: 5px; position: absolute;
+}
+.ddshadow {
+	background: silver; left: 0px; top: 0px; width: 0px; height: 0px; position: absolute;
+}
+.toplevelshadow {
+	opacity: 0.8;
+}

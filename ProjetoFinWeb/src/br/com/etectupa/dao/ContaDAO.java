@@ -96,6 +96,33 @@ public class ContaDAO {
 
 		return conta;
 	}
+	
+	public Conta listarUnico(String descricao) {
+		Conta conta = new Conta();
+		String sql = "SELECT * FROM Conta " 
+		          + " WHERE descricao = ?";
+
+		try {
+			Conecta conn = Conecta.getInstance();
+			Connection conexao = conn.getConnection();
+			PreparedStatement stmt = conexao.prepareStatement(sql);
+			stmt.setString(1, descricao);
+
+			ResultSet rs = stmt.executeQuery();
+
+			rs.next();
+
+			conta.setCodConta(rs.getInt("codConta"));
+			conta.setCodUsuario(rs.getInt("codUsuario"));
+			conta.setDescricao(rs.getString("descricao"));
+			conta.setSaldoInicial(rs.getDouble("saldoInicial"));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return conta;
+	}
 
 	public List<Conta> getLista() {
 		ArrayList<Conta> contas = new ArrayList<Conta>();
@@ -123,4 +150,34 @@ public class ContaDAO {
 
 		return contas;
 	}
+
+	public List<Conta> Lista(int codUsuario) {
+		ArrayList<Conta> contas = new ArrayList<Conta>();
+		String sql = "SELECT * FROM Conta " 
+		          + " WHERE codUsuario = ?";
+
+		try {
+			Conecta conn = Conecta.getInstance();
+			Connection conexao = conn.getConnection();
+			PreparedStatement stmt = conexao.prepareStatement(sql);
+			stmt.setInt(1, codUsuario);
+
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				Conta conta = new Conta();
+				conta.setCodConta(rs.getInt("codConta"));
+				conta.setCodUsuario(rs.getInt("codUsuario"));
+				conta.setDescricao(rs.getString("descricao"));
+				conta.setSaldoInicial(rs.getDouble("saldoInicial"));
+								
+				contas.add(conta);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return contas;
+	}
+	
 }

@@ -4,7 +4,7 @@
 <form method="post" action="AutenticarLogin">
 <FIELDSET>
 <LEGEND>Login de Usuários</LEGEND>
-<table>
+<table class="normal">
 	<tr>
 		<td>
 			<LABEL accessKey=1 for=idUsuario>Usuário:</LABEL>
@@ -22,20 +22,20 @@
 		</td>
 	</tr>
 </table>
-<table width="100%">
+<table width="100%" class="normal">
 	<tr>							
-		<td align="left">
-			<input type="hidden" name="acao" value="login" />
-	    	<BUTTON class=botao name="entrar"  type=submit>Entrar</BUTTON>
-	    </td>
-	    <td align="right">
-			<A class=botao href="cadLogin.jsp">Criar uma Conta</A>
-			
+		<td valign="center" align="left">			
+	    	<input type="hidden" name="acao" value="login" />
+	    	<span align="left"><BUTTON class=botao name="entrar"  type=submit>Entrar</BUTTON></span>	    	
+			<span align="right"><a class=botao  href="cadLogin.jsp">Criar uma Conta</a></span>			
+			<span align="right"><a class=botao  href="recuperarSenha.jsp">Esqueceu sua senha?</a></span>
 	    </td>			    
 	</tr>
 </table>
 <c:if test="${erro > 0}">
-	Login inválido!
+    <center>
+	<p class="msg">Login inválido!</p>
+	</center>
 	</c:if>
 	</FIELDSET>
 </form>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.com.etectupa.dao.OperacaoDAO;
 import br.com.etectupa.model.Operacao;
+import br.com.etectupa.validation.ValidaOperacao;
 
 public class GravarOperacao extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,22 +29,26 @@ public class GravarOperacao extends HttpServlet {
 
 		if (request.getParameter("codGrupo") == null
 				|| Integer.parseInt(request.getParameter("codGrupo")) == 0) {
-			msg = "Informe o grupo";
+			msg = "Informe o grupo da despesa/receita";
 		} else {
 			codGrupo = Integer.parseInt(request.getParameter("codGrupo"));
 		}
 
 		if (request.getParameter("descricao") == null
 				|| request.getParameter("descricao").equals("")) {
-			msg = "Informe a descrição da conta";
+			msg = "Informe a descrição da despesa/receita";
 		} else {
 			descricao = request.getParameter("descricao");
 		}
 		if (request.getParameter("tipo") == null
 				|| request.getParameter("tipo").equals("")) {
-			msg = "Informe o tipo da conta";
+			msg = "Informe o tipo da despesa/receita";
 		} else {
 			tipo = request.getParameter("tipo");
+		}
+
+		if (ValidaOperacao.existeOperacao(descricao)){
+			msg = "Despesa/Receita já cadastrada.";
 		}
 
 		if (msg.equals("")) {

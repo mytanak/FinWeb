@@ -2,16 +2,20 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib tagdir="/WEB-INF/tags/layout" prefix="layout" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<layout:page usuario="${login}" title="Cadastro de Grupos de Despesas e Receitas" description="Cadastro de Grupos de Despesas e Receitas" keywords="grupos, despesas, receitas">
+<layout:page usuario="${login}" title="Cadastrar Grupo de Despesas/Receitas" description="Cadastrar Grupo de Despesas/Receitas" keywords="grupos, despesas, receitas">
+	<c:if test="${login == null}">
+		<c:redirect url="index.jsp"/>
+	</c:if>
     <c:if test="${login != null}">
     <jsp:body>
-    <c:if test="${msg != null}">
-    ${msg}
-    </c:if>    
-    <form name="grupo" action="GravarGrupo" method="post">
+    <div id="content">
+	<c:if test="${msg != null}">
+	<p class="msg">${msg}</p>
+	</c:if>
+    <form id="formGrupo" name="grupo" action="GravarGrupo" method="post">
 		<FIELDSET>
-		<LEGEND>Cadastro de Grupos de Despesas e Receitas</LEGEND>
-			<table>
+		<LEGEND>Cadastrar Grupo de Despesas/Receitas</LEGEND>
+			<table class="normal">
 				<tr>
 					<td>
     					<LABEL accessKey=1 for=descricao>Descrição:</LABEL>
@@ -21,18 +25,18 @@
     				</td>
     			</tr>			
     		</table>
-			<table align="right">
+			<table align="right" class="normal">
     			<tr>
 					<td>
 				    	<BUTTON class=botao name=gravar type=submit>Gravar</BUTTON>
-				    	<BUTTON class=botao name=cancelar type=reset>Cancelar</BUTTON>
-				    	<A class=botao href="home.jsp">Voltar</A>
+				    	<BUTTON class=botao name=limpar type=reset>Limpar</BUTTON>
+				    	<A class=botao href="listarGrupo.jsp">Cancelar</A>
 				    </td>				    
 				</tr>
 			</table> 
 		</FIELDSET>
 	</form>
-		
+	</div>	
     </jsp:body>
     </c:if>
 </layout:page>

@@ -7,12 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import sun.text.normalizer.ReplaceableString;
-
 import br.com.etectupa.dao.ContaDAO;
 import br.com.etectupa.dao.UsuarioDAO;
 import br.com.etectupa.model.Conta;
 import br.com.etectupa.model.Usuario;
+import br.com.etectupa.validation.ValidaConta;
 
 public class GravarConta extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -22,12 +21,13 @@ public class GravarConta extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String idUsuario = request.getParameter("idUsuario");
+			HttpServletResponse response) throws ServletException, IOException {		
+		String pagina = "cadConta.jsp";
+		String idUsuario = request.getParameter("idUsuario");		
 		String descricao = "";
 		double saldoInicial = 0;
-		String msg = "";
-		String pagina = "cadConta.jsp";
+		String msg = "";	
+		String vlr = "";
 
 		if (request.getParameter("descricao") == null
 				|| request.getParameter("descricao").equals("")) {
@@ -36,12 +36,22 @@ public class GravarConta extends HttpServlet {
 			descricao = request.getParameter("descricao");
 		}
 
-		if (request.getParameter("saldoInicial") != null) {
-			saldoInicial = Double.parseDouble(request
-					.getParameter("saldoInicial"));
+		if (request.getParameter("saldoInicial") != null){
+			vlr = request.getParameter("saldoInicial");
+			vlr = vlr.replaceAll("\\.", "");
+			vlr = vlr.replaceAll(",", ".");
+		}		
+			
+		if (request.getParameter("saldoInicial") != null && !request.getParameter("saldoInicial").equals("")){
+			saldoInicial = Double.parseDouble(vlr);
 		}
-
+		
+		if (ValidaConta.existeConta(descricao)){
+			msg = "Conta já cadastrada.";
+		}
+		
 		if (msg.equals("")) {
+			
 			ContaDAO contaDao = new ContaDAO();
 			UsuarioDAO usuarioDao = new UsuarioDAO();
 

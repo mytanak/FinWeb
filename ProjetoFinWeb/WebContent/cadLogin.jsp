@@ -5,13 +5,14 @@
 
 <layout:page usuario="" title="Criar Conta" description="Criar Conta" keywords="conta">
     <jsp:body>
-    <c:if test="${msg != null}">
-    ${msg}
-    </c:if>
-	<form name="usuario" action="GravarLogin" method="post">
+    <div id="content">
+	<c:if test="${msg != null}">
+	<p class="msg">${msg}</p>
+	</c:if>
+	<form id="formLogin" name="usuario" action="GravarLogin" method="post">
 		<FIELDSET>
 		<LEGEND>Criar Conta</LEGEND>
-			<table>
+			<table class="normal">
 				<tr>
 					<td>
     					<LABEL accessKey=1 for=idUsuario>Identificação:</LABEL>
@@ -33,12 +34,20 @@
 				    	<LABEL accessKey=3 for=senha>Senha:</LABEL>
 				    </td>
 				    <td align="left">				    	
-				    	<input type="password" name="senha" size="10" />
+				    	<input id="senha" type="password" name="senha" size="10" />
+				    </td>
+				</tr>
+		    	<tr>
+		    		<td>
+				    	<LABEL accessKey=4 for=confirmeSenha>Confirme a Senha:</LABEL>
+				    </td>
+				    <td align="left">				    	
+				    	<input type="password" name="confirmeSenha" size="10" />
 				    </td>
 				</tr>
 				<tr>
 				    <td>				    	
-				    	<LABEL accessKey=4 for=email>E-mail:</LABEL> 
+				    	<LABEL accessKey=5 for=email>E-mail:</LABEL> 
 				    </td>
 				    <td align="left">
 				    	<input type="text" name="email" size="50" />
@@ -46,25 +55,26 @@
 				</tr>
 				<tr>
 					<td>				    
-				    	<LABEL accessKey=5 for=dataNascimento>Data Nascimento:</LABEL>
+				    	<LABEL accessKey=6 for=dataNascimento>Data Nascimento:</LABEL>
 				    </td>
 				    <td align="left"> 
-				    	<input id=date type="text" name="dataNascimento" size="10" />
+				    	<input class="mask-data" type="text" name="dataNascimento" size="10" />
 				    </td>
 				</tr>
 				
     		</table>
-    		<table align="right">
+    		<table align="right" class="normal">
     			<tr>
 					<td>
 				    	<BUTTON class=botao name=gravar type=submit>Gravar</BUTTON>
-				    	<BUTTON class=botao name=cancelar type=reset>Cancelar</BUTTON>
-				    	<A class=botao href="index.jsp">Voltar</A>
+				    	<BUTTON class=botao name=limpar type=reset>Limpar</BUTTON>
+				    	<A class=botao href="index.jsp">Cancelar</A>
 				    </td>				    
 				</tr>
 			</table> 
 		</FIELDSET>
 	</form>	
+	</div>
     </jsp:body>  
     
 </layout:page>

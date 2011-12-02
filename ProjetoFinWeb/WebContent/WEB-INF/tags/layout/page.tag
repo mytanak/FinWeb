@@ -25,12 +25,32 @@
  
         <!-- Essential scripts -->
         <link rel="stylesheet" type="text/css" href="css/style.css"/>
-		<script type="text/javascript" src="js/menu.js"></script>
-		<script type="text/javascript" src="js/jquery.js"></script>
-        <script type="text/javascript" src="js/jquery.maskedinput-1.3.min.js"></script>        
-        <script type="text/javascript" src="js/jquery-imask-min.js"></script>
-        <script type="text/javascript" src="js/formatdate.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/screen.css"/>
+        <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css" media="all"/>
         
+		<script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/jquery.maskedinput-1.3.min.js"></script>
+        <script type="text/javascript" src="js/formatdate.js"></script>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/ddsmoothmenu.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/tab.js"></script>
+		<script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery.price_format.1.5.js"></script>		
+		<script type="text/javascript" src="js/format.js"></script>		
+		<script type="text/javascript" src="js/jquery.validate.js"></script>
+		
+		<script type="text/javascript" src="js/validacao/validaConta.js"></script>
+		<script type="text/javascript" src="js/validacao/validaLogin.js"></script>
+		<script type="text/javascript" src="js/validacao/validaUsuario.js"></script>		
+		<script type="text/javascript" src="js/validacao/validaLancamento.js"></script>
+		<script type="text/javascript" src="js/validacao/validaOperacao.js"></script>
+		<script type="text/javascript" src="js/validacao/validaGrupo.js"></script>
+		<script type="text/javascript" src="js/validacao/validaFornecedor.js"></script>
+		<script type="text/javascript" src="js/validacao/validaModalidade.js"></script>
+		        
         <!-- Process the given input fragment -->
         <jsp:invoke fragment="extraHeader"/>
     </head>
@@ -38,20 +58,17 @@
         <div id="geral">
         	<div id="geral2" align="center">
         	<!-- Main -->
-        		<div id="wrapper">
-            		<!-- Renders the page header -->
-            		<layout:header usuario="${usuario}"/>
- 
-            		<!-- Renders the tag body inside a DIV -->
-            		<div id="content"><jsp:doBody/>
-						<div id="conteudo">
-        				</div>
-					</div>
- 
-            		<!-- Renders the page footer -->
-            		<layout:footer/>
-        		</div> <!-- Main -->
+           		<!-- Renders the page header -->
+           		<layout:header usuario="${usuario}"/>
+
+           		<!-- Renders the tag body inside a DIV -->
+           		
+				<jsp:doBody/>
+
+           		<!-- Renders the page footer -->
+           		<layout:footer/>
  			</div> 
+        	<!-- Main -->
     	</div>
         <!-- Process the given input fragment -->
         <jsp:invoke fragment="extraBottom"/>

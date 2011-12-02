@@ -30,8 +30,4 @@ public class Convert {
 		
 		return data;
 	}
-	public static Date Today() {
-		Date data = new Date(); 
-		return data;
-	}
 }

@@ -87,6 +87,31 @@ public class ModalidadeDAO {
 		return modalidade;
 	}
 
+	public Modalidade listarUnico(String descricao) {
+		Modalidade modalidade = new Modalidade();
+		String sql = "SELECT * FROM Modalidade " 
+		          + " WHERE descricao = ?";
+
+		try {
+			Conecta conn = Conecta.getInstance();
+			Connection conexao = conn.getConnection();
+			PreparedStatement stmt = conexao.prepareStatement(sql);
+			stmt.setString(1, descricao);
+
+			ResultSet rs = stmt.executeQuery();
+
+			rs.next();
+
+			modalidade.setCodModalidade(rs.getInt("codModalidade"));
+			modalidade.setDescricao(rs.getString("descricao"));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modalidade;
+	}
+
 	public List<Modalidade> getLista() {
 		ArrayList<Modalidade> modalidades = new ArrayList<Modalidade>();
 		String sql = "SELECT * FROM Modalidade";

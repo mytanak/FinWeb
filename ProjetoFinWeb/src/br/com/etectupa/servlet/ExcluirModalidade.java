@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.etectupa.dao.ModalidadeDAO;
+import br.com.etectupa.validation.ValidaModalidade;
 
 public class ExcluirModalidade extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -21,12 +22,26 @@ public class ExcluirModalidade extends HttpServlet {
 		int codModalidade = Integer.parseInt(request
 				.getParameter("codModalidade"));
 		String pagina = "listarModalidade.jsp";
+		String msg = "";
+		
+		if (ValidaModalidade.modalidadeUtilizada(codModalidade)){
+			msg = "Modalidade de pagamento/recebimento possui movimentação e não pode ser excluída.";
+		}
+		
+		if (msg.equals("")) {
+			ModalidadeDAO modalidadeDao = new ModalidadeDAO();
+			
+			try {
+				modalidadeDao.excluir(codModalidade);
+				msg = "Exclusão realizada com sucesso!";
 
-		ModalidadeDAO modalidadeDao = new ModalidadeDAO();
-
-		modalidadeDao.excluir(codModalidade);
-
-		request.setAttribute("msg", "Modalidade excluída com sucesso!");
+			} catch (Exception e) {
+				msg = e.getMessage();
+			}
+			request.setAttribute("msg", msg);
+		} else {
+			request.setAttribute("msg", msg);
+		}
 
 		request.getRequestDispatcher(pagina).forward(request, response);
 	}

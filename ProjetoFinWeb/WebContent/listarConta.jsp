@@ -2,50 +2,75 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib tagdir="/WEB-INF/tags/layout" prefix="layout" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+<%@ page import="br.com.etectupa.displaytag.collection.ListConta" %>
+<%@ page import="br.com.etectupa.collection.ResumoConta" %>
 
-<layout:page usuario="${login}" title="Cadastro de Conta" description="Cadastro de Conta" keywords="conta">
+<c:set var="idUsuario" value="${login}"/>
+<%
+String idUsuario = (String) pageContext.getAttribute("idUsuario");
+request.setAttribute( "listConta", new ListConta(idUsuario));
+request.setAttribute( "resumoConta", new ResumoConta(idUsuario));
+
+%>
+
+<layout:page usuario="${login}" title="Contas" description="Contas" keywords="conta">
+	<c:if test="${login == null}">
+		<c:redirect url="index.jsp"/>
+	</c:if>
     <c:if test="${login != null}">
     <jsp:body>
-	<jsp:useBean id="dao" class="br.com.etectupa.dao.ContaDAO" />
+    <div id="content">
 	<c:if test="${msg != null}">
-	${msg}
+	<p class="msg">${msg}</p>
 	</c:if>
-	<jsp:useBean id="usuarioDao" class="br.com.etectupa.dao.UsuarioDAO" />
-    
-	<c:forEach var="usuarios" items="${usuarioDao.lista}" varStatus="id">
-	    <c:if test="${usuarios.idUsuario == login}">
-	        <c:set var="codigoUsuario" value="${usuarios.codUsuario}"/>
-		</c:if>	
-	</c:forEach> 
-	<FIELDSET>
-		<LEGEND>Cadastro de Contas</LEGEND>
-		<table id="tablesordem" class="tablesorter" border="0" cellpadding="0" cellspacing="1">
-	        <thead>
-	        <tr>
-				<th>Código Conta</th>
-				<th>Descrição</th>
-				<th align="right">Saldo Inicial</th>			
-				<th align="center">Editar</th>
-				<th align="center">Excluir</th>
-			</tr>
-			</thead>
-			<tbody>
-			
-				<c:forEach var="contas" items="${dao.lista}" varStatus="id">
-					<c:if test="${contas.codUsuario == codigoUsuario}">
-						<tr bgcolor="#${id.count % 2 == 0 ? 'e6EEEE' : 'ffffff' }">
-							<td>${contas.codConta}</td>
-							<td>${contas.descricao}</td>
-							<td align="right">${contas.saldoInicial}</td>
-							
-							<td align="center" ><a class="botao1" href="EditarConta?codConta=${contas.codConta}">Editar</a></td>
-							<td align="center" ><a class="botao1" href="ExcluirConta?codConta=${contas.codConta}">Excluir</a></td>
-						</tr>
-					</c:if>	
-				</c:forEach>			
-			</tbody>
-	</table>	
-	</FIELDSET>
-</jsp:body>
-</c:if>
+	    <FIELDSET>
+		<LEGEND>Contas</LEGEND>
+		<br/>
+		<div align="right">
+		<A class=botao href="cadConta.jsp">Novo</A>
+		</div>
+		<display:table name="listConta" export="false" sort="list" pagesize="8">
+		    <display:column property="codConta" title="Código" sortable="true" headerClass="sortable" href="ConsultaDadosConta" paramId="codConta" paramProperty="codConta"/>
+		    <display:column property="descricao" title="Descrição das Contas" sortable="true" headerClass="sortable" href="ConsultaDadosConta" paramId="codConta" paramProperty="codConta"/>
+		    <display:column property="saldoInicial" title="Saldo Inicial" format="{0,number,#,##0.00}" headerClass="r" class="r"/>
+		    <display:column property="saldoAtual" title="Saldo Atual" format="{0,number,#,##0.00}" headerClass="r" class="r"/>
+		   
+		    <display:column title="Editar" href="EditarConta" paramId="codConta" paramProperty="codConta" >Editar</display:column>
+		    <display:column title="Excluir" href="ExcluirConta" paramId="codConta" paramProperty="codConta" >Excluir</display:column>
+		    
+		</display:table>
+	   
+		<div>		
+		<c:forEach var="resumo" items="${resumoConta }">
+		<div class="divresumogeral">
+		    <fieldset>
+		    <legend>Resumo Geral das Contas</legend> 			
+			<div class="divesquerda" >
+				Saldo Inicial
+			</div>
+			<div class="divdireita">
+				<fmt:formatNumber  pattern="#,##0.00">${resumo.saldoInicial }</fmt:formatNumber>								
+			</div>
+			<div class="divesquerda">
+				Saldo Atual
+			</div>
+			<div class="divdireita">
+				<fmt:formatNumber  pattern="#,##0.00">${resumo.saldo }</fmt:formatNumber>				
+			</div>
+			</fieldset>
+		</div>
+		</c:forEach>	
+		</div>
+		
+		
+		</FIELDSET>
+		</div>
+	</jsp:body>		
+	</c:if>
+	<c:if test="${login == null}">
+		<c:redirect url="index.jsp"/>
+	</c:if>
+	
 </layout:page>

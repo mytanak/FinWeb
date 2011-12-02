@@ -1,35 +1,45 @@
 <%@ tag language="java" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ tag body-content="empty" description="Header tag file" %>
 <%@ attribute name="usuario"  required="true" description="Page Usuario" %>
-<div id="header">
-<!-- Header section here -->
-	<div id="topo">
-		<c:if test="${not empty usuario}">
-    		<p id="welcome">Bem vindo(a) ${usuario}! <a href="AutenticarLogin?acao=logout">Sair</a></p>
-    		
-    	</c:if>
-	</div>
 
+<!-- Header section here -->
+<div id="topo">
 	<c:if test="${not empty usuario}">
-		<div id="menu-superior">
-	        <ul id="menu_dropdown" class="menubar">
-				<li class="submenu"><a href="home.jsp">Home</a></li>
-	            <li class="submenu"><a href="">Cadastros</a>
-	      			<ul class="menu">
-	        			<li align="left"><a class="opcaomenu" href="cadConta.jsp">Conta</a></li>
-	        			<li align="left"><a class="opcaomenu" href="cadGrupo.jsp">Grupo de Despesas e Receitas</a></li>
-	        			<li align="left"><a class="opcaomenu" href="cadOperacao.jsp">Despesas \ Receitas</a></li>
-	        			<li align="left"><a class="opcaomenu" href="cadModalidade.jsp">Modalidade</a></li>
-	        			<li align="left"><a class="opcaomenu" href="cadFornecedor.jsp">Fornecedor</a></li>
-	                    <c:if test="${usuario == 'Admin'}">
-	                    	<li align="left"><a class="opcaomenu" href="cadUsuario.jsp">Usuário</a></li>
-	                    </c:if>
-	      			</ul>
-	            </li>
-	            <li class="submenu"><a href="cadLancamento.jsp">Lançamentos</a></li>
-	            <li class="submenu"><a href="relatorio.html">Relatórios</a></li>
-			</ul>        
-	    </div>
-    </c:if>
+   		<div id="welcome">Bem vindo(a) ${usuario}! <a id="sair" href="AutenticarLogin?acao=logout">Sair</a></div>
+		<jsp:useBean id="agora" class="java.util.Date"/>
+		<div id="welcome1"><fmt:formatDate value="${agora}" dateStyle="full"/></div>   		
+   	</c:if>
 </div>
+
+<c:if test="${not empty usuario}">
+	<div id="menu-superior" align="center">
+		<div id="smoothmenu1" class="ddsmoothmenu">
+		<ul>
+		<li><a href="home.jsp">Home</a></li>
+		<li><a href="#">Cadastros</a>
+		  <ul>
+		  	<li align="left"><a href="listarConta.jsp">Conta</a></li>
+  			<li align="left"><a href="listarGrupo.jsp">Grupo de Despesas e Receitas</a></li>
+  			<li align="left"><a href="listarOperacao.jsp">Despesas \ Receitas</a></li>
+  			<li align="left"><a href="listarModalidade.jsp">Modalidade de Pagamento/Recebimento</a></li>
+  			<li align="left"><a href="listarFornecedor.jsp">Fornecedor</a></li>
+            <c:if test="${usuario == 'Admin'}">
+              	<li align="left"><a href="listarUsuario.jsp">Usuário</a></li>
+            </c:if>
+		  </ul>
+		</li>
+		<li><a href="ListarLancamento?idUsuario=${usuario}">Lançamentos</a></li>
+		<li><a href="relatorio.jsp">Relatórios</a></li>
+		<li><a href="configuracoes.jsp">Configurações</a></li>		
+		<li><a href="sobre.jsp">Sobre</a></li>
+		</ul>
+		<br style="clear: left" />
+		</div>
+    </div>
+</c:if>
+<c:if test="${empty usuario}">
+	<div id="menu-superior">
+    </div>
+</c:if>

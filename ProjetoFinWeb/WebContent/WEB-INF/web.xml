@@ -9,6 +9,16 @@
   <servlet-class>br.com.etectupa.servlet.AutenticarLogin</servlet-class>
  </servlet>
  <servlet>
+  <display-name>RecuperarSenha</display-name>
+  <servlet-name>RecuperarSenha</servlet-name>
+  <servlet-class>br.com.etectupa.servlet.RecuperarSenha</servlet-class>
+ </servlet> 
+ <servlet>
+  <display-name>AlterarSenhaUsuario</display-name>
+  <servlet-name>AlterarSenhaUsuario</servlet-name>
+  <servlet-class>br.com.etectupa.servlet.AlterarSenhaUsuario</servlet-class>
+ </servlet> 
+ <servlet>
   <display-name>GravarConta</display-name>
   <servlet-name>GravarConta</servlet-name>
   <servlet-class>br.com.etectupa.servlet.GravarConta</servlet-class>
@@ -168,10 +178,60 @@
   <servlet-name>ConfirmarEditarUsuario</servlet-name>
   <servlet-class>br.com.etectupa.servlet.ConfirmarEditarUsuario</servlet-class>
  </servlet>
+ <servlet>
+  <display-name>ConsultaDadosConta</display-name>
+  <servlet-name>ConsultaDadosConta</servlet-name>
+  <servlet-class>br.com.etectupa.servlet.ConsultaDadosConta</servlet-class>
+ </servlet>
+ <servlet>
+  <display-name>ConsultaDadosLancamento</display-name>
+  <servlet-name>ConsultaDadosLancamento</servlet-name>
+  <servlet-class>br.com.etectupa.servlet.ConsultaDadosLancamento</servlet-class>
+ </servlet>
+ <servlet>
+  <display-name>ConsultaDadosGrupo</display-name>
+  <servlet-name>ConsultaDadosGrupo</servlet-name>
+  <servlet-class>br.com.etectupa.servlet.ConsultaDadosGrupo</servlet-class>
+ </servlet>
+ <servlet>
+  <display-name>ConsultaDadosFornecedor</display-name>
+  <servlet-name>ConsultaDadosFornecedor</servlet-name>
+  <servlet-class>br.com.etectupa.servlet.ConsultaDadosFornecedor</servlet-class>
+ </servlet>
+ <servlet>
+  <display-name>ConsultaDadosOperacao</display-name>
+  <servlet-name>ConsultaDadosOperacao</servlet-name>
+  <servlet-class>br.com.etectupa.servlet.ConsultaDadosOperacao</servlet-class>
+ </servlet>
+ <servlet>
+  <display-name>ConsultaDadosModalidade</display-name>
+  <servlet-name>ConsultaDadosModalidade</servlet-name>
+  <servlet-class>br.com.etectupa.servlet.ConsultaDadosModalidade</servlet-class>
+ </servlet> 
+ <servlet>
+  <display-name>ListarLancamento</display-name>
+  <servlet-name>ListarLancamento</servlet-name>
+  <servlet-class>br.com.etectupa.servlet.ListarLancamento</servlet-class>
+ </servlet>
+ <servlet>
+  <display-name>CadastroLancamento</display-name>
+  <servlet-name>CadastroLancamento</servlet-name>
+  <servlet-class>br.com.etectupa.servlet.CadastroLancamento</servlet-class>
+ </servlet>
+ 
  <servlet-mapping>
   <servlet-name>AutenticarLogin</servlet-name>
   <url-pattern>/AutenticarLogin</url-pattern>
  </servlet-mapping>
+ <servlet-mapping>
+  <servlet-name>RecuperarSenha</servlet-name>
+  <url-pattern>/RecuperarSenha</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+  <servlet-name>AlterarSenhaUsuario</servlet-name>
+  <url-pattern>/AlterarSenhaUsuario</url-pattern>
+ </servlet-mapping>
+ 
  <servlet-mapping>
   <servlet-name>GravarConta</servlet-name>
   <url-pattern>/GravarConta</url-pattern>
@@ -300,18 +360,62 @@
   <servlet-name>ConfirmarEditarUsuario</servlet-name>
   <url-pattern>/ConfirmarEditarUsuario</url-pattern>
  </servlet-mapping> 
- <welcome-file-list>
-  <welcome-file>index.jsp</welcome-file>
- </welcome-file-list>
- 
- <servlet>
-  <display-name>ListarLancamento</display-name>
-  <servlet-name>ListarLancamento</servlet-name>
-  <servlet-class>br.com.etectupa.servlet.ListarLancamento</servlet-class>
- </servlet>
+ <servlet-mapping>
+  <servlet-name>ConsultaDadosConta</servlet-name>
+  <url-pattern>/ConsultaDadosConta</url-pattern>
+ </servlet-mapping> 
+ <servlet-mapping>
+  <servlet-name>ConsultaDadosLancamento</servlet-name>
+  <url-pattern>/ConsultaDadosLancamento</url-pattern>
+ </servlet-mapping> 
+ <servlet-mapping>
+  <servlet-name>ConsultaDadosGrupo</servlet-name>
+  <url-pattern>/ConsultaDadosGrupo</url-pattern>
+ </servlet-mapping> 
+ <servlet-mapping>
+  <servlet-name>ConsultaDadosFornecedor</servlet-name>
+  <url-pattern>/ConsultaDadosFornecedor</url-pattern>
+ </servlet-mapping> 
+ <servlet-mapping>
+  <servlet-name>ConsultaDadosOperacao</servlet-name>
+  <url-pattern>/ConsultaDadosOperacao</url-pattern>
+ </servlet-mapping> 
+ <servlet-mapping>
+  <servlet-name>ConsultaDadosModalidade</servlet-name>
+  <url-pattern>/ConsultaDadosModalidade</url-pattern>
+ </servlet-mapping> 
  <servlet-mapping>
   <servlet-name>ListarLancamento</servlet-name>
   <url-pattern>/ListarLancamento</url-pattern>
  </servlet-mapping>
+ <servlet-mapping>
+  <servlet-name>CadastroLancamento</servlet-name>
+  <url-pattern>/CadastroLancamento</url-pattern>
+ </servlet-mapping>
+ <servlet>
+    <servlet-name>CewolfServlet</servlet-name>
+    <servlet-class>de.laures.cewolf.CewolfRenderer</servlet-class>
+    <init-param>
+        <param-name>storage</param-name>
+        <param-value>de.laures.cewolf.storage.TransientSessionStorage</param-value>
+    </init-param>
+    <init-param>
+        <param-name>overliburl</param-name>
+        <param-value>overlib.js</param-value>
+    </init-param>
+    <init-param>
+        <param-name>debug</param-name>
+        <param-value>true</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>CewolfServlet</servlet-name>
+    <url-pattern>/cewolf/*</url-pattern>
+  </servlet-mapping>
+ <welcome-file-list>
+  <welcome-file>index.jsp</welcome-file>
+ </welcome-file-list>
  
 </web-app>

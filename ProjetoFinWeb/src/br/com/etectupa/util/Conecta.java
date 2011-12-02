@@ -1,14 +1,18 @@
 package br.com.etectupa.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 
 public class Conecta {
-	private final static String USER="ProjetoWebJava";
-	private final static String PASSWD="@PosJava2011";
-	private final static String SERVER="Tanaka-PC";
+	private static String USER="";
+	private static String PASSWD="";
+	private static String SERVER="";
+	private static String DATABASE="";
 	//private final static String SERVER="10.67.23.10";
 	Connection connection = null;
 	
@@ -33,9 +37,17 @@ public class Conecta {
 			// Criando a conexao jdbc
 			
 			SQLServerDataSource ds = new SQLServerDataSource();
+			
+			Properties prop = carregarConfiguracoes();
+			
+			USER = prop.getProperty("user");
+			PASSWD = prop.getProperty("senha");
+			SERVER = prop.getProperty("server");
+			DATABASE = prop.getProperty("banco");
+			
 			ds.setServerName(SERVER);
 			ds.setInstanceName("SQLEXPRESS");
-			ds.setDatabaseName("ProjetoWebJava");
+			ds.setDatabaseName(DATABASE);
 			ds.setUser(USER);
 			ds.setPassword(PASSWD);
 			
@@ -86,4 +98,19 @@ public class Conecta {
 			e.printStackTrace();
 		}
 	}
+	
+	public static Properties carregarConfiguracoes() {
+		Properties prop = new Properties();
+		InputStream is = null;
+		try {
+			is = Conecta.class.getResourceAsStream("bd.properties");
+			prop.load(is);
+
+		} catch (IOException e) {
+			e.getMessage();
+		}
+
+		return prop;
+	}
+	
 }

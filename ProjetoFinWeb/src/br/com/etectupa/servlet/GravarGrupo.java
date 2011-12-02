@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.com.etectupa.dao.GrupoDAO;
 import br.com.etectupa.model.Grupo;
+import br.com.etectupa.validation.ValidaGrupo;
 
 public class GravarGrupo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,6 +29,10 @@ public class GravarGrupo extends HttpServlet {
 			msg = "Informe a descrição do grupo de contas";
 		} else {
 			descricao = request.getParameter("descricao");
+		}
+
+		if (ValidaGrupo.existeGrupo(descricao)){
+			msg = "Grupo já cadastrado.";
 		}
 
 		if (msg.equals("")) {

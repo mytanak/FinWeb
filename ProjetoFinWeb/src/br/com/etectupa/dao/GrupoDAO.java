@@ -87,6 +87,31 @@ public class GrupoDAO {
 		return grupo;
 	}
 
+	public Grupo listarUnico(String descricao) {
+		Grupo grupo = new Grupo();
+		String sql = "SELECT * FROM Grupo " 
+		          + " WHERE descricao = ?";
+
+		try {
+			Conecta conn = Conecta.getInstance();
+			Connection conexao = conn.getConnection();
+			PreparedStatement stmt = conexao.prepareStatement(sql);
+			stmt.setString(1, descricao);
+
+			ResultSet rs = stmt.executeQuery();
+
+			rs.next();
+
+			grupo.setCodGrupo(rs.getInt("codGrupo"));
+			grupo.setDescricao(rs.getString("descricao"));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return grupo;
+	}
+
 	public List<Grupo> getLista() {
 		ArrayList<Grupo> grupos = new ArrayList<Grupo>();
 		String sql = "SELECT * FROM Grupo";
@@ -111,4 +136,34 @@ public class GrupoDAO {
 
 		return grupos;
 	}
+	
+	public List<Grupo> listaGruposUtilizados(String tipo) {
+		ArrayList<Grupo> grupos = new ArrayList<Grupo>();
+		String sql = "SELECT * FROM Grupo" +
+				" WHERE EXISTS(SELECT 1 FROM Operacao " +
+				"              WHERE Operacao.codGrupo = Grupo.codGrupo" +
+				"				 AND Operacao.tipo = ?); ";
+
+		try {
+			Conecta conn = Conecta.getInstance();
+			Connection conexao = conn.getConnection();
+			PreparedStatement stmt = conexao.prepareStatement(sql);
+			stmt.setString(1, tipo);
+
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Grupo grupo = new Grupo();
+				grupo.setCodGrupo(rs.getInt("codGrupo"));
+				grupo.setDescricao(rs.getString("descricao"));
+								
+				grupos.add(grupo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return grupos;
+	}
+	
 }

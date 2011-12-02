@@ -11,6 +11,7 @@ import br.com.etectupa.dao.ContaDAO;
 import br.com.etectupa.dao.UsuarioDAO;
 import br.com.etectupa.model.Conta;
 import br.com.etectupa.model.Usuario;
+import br.com.etectupa.validation.ValidaConta;
 
 public class ConfirmarEditarConta extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,6 +29,7 @@ public class ConfirmarEditarConta extends HttpServlet {
 		double saldoInicial = 0;
 		String msg = "";
 		String pagina = "altConta.jsp";
+		String vlr = "";
 
 		if (request.getParameter("descricao") == null
 				|| request.getParameter("descricao").equals("")) {
@@ -36,13 +38,19 @@ public class ConfirmarEditarConta extends HttpServlet {
 			descricao = request.getParameter("descricao");
 		}
 
-		if (request.getParameter("saldoInicial") == null
-				|| request.getParameter("saldoInicial").equals("")) {
-			saldoInicial = 0;
-		} else {
-			saldoInicial = Double.parseDouble(request
-					.getParameter("saldoInicial"));
+		if (request.getParameter("saldoInicial") != null){
+			vlr = request.getParameter("saldoInicial");
+			vlr = vlr.replaceAll("\\.", "");
+			vlr = vlr.replaceAll(",", ".");
+		}		
+			
+		if (request.getParameter("saldoInicial") != null && !request.getParameter("saldoInicial").equals("")){
+			saldoInicial = Double.parseDouble(vlr);
 		}
+
+		if (ValidaConta.existeConta(codConta, codUsuario, descricao)){
+			msg = "Conta já cadastrada.";
+		}		
 
 		if (msg.equals("")) {
 			pagina = "listarConta.jsp";			
@@ -55,16 +63,19 @@ public class ConfirmarEditarConta extends HttpServlet {
 			conta.setSaldoInicial(saldoInicial);
 			
 			try {
-				contaDao.inserir(conta);
-				msg = "Conta realizada com sucesso!";				
+				contaDao.alterar(conta);
+				msg = "Alteração realizada com sucesso!";				
 
 			} catch (Exception e) {
 				msg = e.getMessage();
 			}
 			request.setAttribute("msg", msg);
 		} else {
-			pagina = "altConta.jsp";
+			ContaDAO contaDao = new ContaDAO();
+			Conta conta = contaDao.listarUnico(codConta);
+
 			request.setAttribute("msg", msg);
+			request.setAttribute("Conta", conta);
 		}
 
 		request.getRequestDispatcher(pagina).forward(request, response);

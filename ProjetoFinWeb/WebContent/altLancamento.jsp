@@ -2,12 +2,18 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib tagdir="/WEB-INF/tags/layout" prefix="layout" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<layout:page usuario="${login}" title="Lançamentos" description="Lançamentos" keywords="lançamento">
+<%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
+
+<layout:page usuario="${login}" title="Editar Lançamento" description="Editar Lançamento" keywords="lançamento">
+	<c:if test="${login == null}">
+		<c:redirect url="index.jsp"/>
+	</c:if>
     <c:if test="${login != null}">
     <jsp:body>
-    <c:if test="${msg != null}">
-    ${msg}
-    </c:if>
+    <div id="content">
+	<c:if test="${msg != null}">
+	<p class="msg">${msg}</p>
+	</c:if>
     
     <jsp:useBean id="usuarioDao" class="br.com.etectupa.dao.UsuarioDAO" />
     
@@ -21,10 +27,12 @@
     <jsp:useBean id="operacaoDao" class="br.com.etectupa.dao.OperacaoDAO" />
     <jsp:useBean id="modalidadeDao" class="br.com.etectupa.dao.ModalidadeDAO" />
     <jsp:useBean id="fornecedorDao" class="br.com.etectupa.dao.FornecedorDAO" />
-    <form name="lancamento" action="GravarLancamento" method="post">
+    
+    <c:forEach var="Lancamento" items="${listLancamento}">
+    <form id="formLancamento" name="lancamento" action="ConfirmarEditarLancamento" method="post">
 		<FIELDSET>
-		<LEGEND>Lançamentos</LEGEND>
-			<table>
+		<LEGEND>Editar Lançamento</LEGEND>
+			<table class="normal">
 				<tr>
 					<td>
     					<LABEL accessKey=1 for=codConta>Conta:</LABEL>
@@ -54,10 +62,26 @@
 		    			<select name="codOperacao">
 							<c:forEach var="operacoes" items="${operacaoDao.lista}" varStatus="id">
 								<c:if test="${operacoes.codOperacao == Lancamento.codOperacao}">								
-									<option value="${operacoes.codOperacao}" SELECTED>${operacoes.descricao}</option>
+									<option value="${operacoes.codOperacao}" SELECTED>
+									<c:if test="${operacoes.tipo == 'D'}">
+									Despesa - 
+									</c:if>
+									<c:if test="${operacoes.tipo == 'C'}">
+									Receita - 
+									</c:if>
+									${operacoes.descricao}
+									</option>
 								</c:if>
 								<c:if test="${operacoes.codOperacao != Lancamento.codOperacao}">								
-									<option value="${operacoes.codOperacao}">${operacoes.descricao}</option>
+									<option value="${operacoes.codOperacao}">
+									<c:if test="${operacoes.tipo == 'D'}">
+									Despesa - 
+									</c:if>
+									<c:if test="${operacoes.tipo == 'C'}">
+									Receita - 
+									</c:if>
+									${operacoes.descricao}
+									</option>
 								</c:if>								
 							</c:forEach>
 						</select>
@@ -102,15 +126,16 @@
 				    	<LABEL accessKey=5 for=dataVencimento>Data Vencimento:</LABEL>
 				    </td>
 				    <td align="left"> 
-				    	<input class="mask-data" type="text" name="dataVencimento" size="10" value="${Lancamento.dataVencimento}"/>
+				    	<input class="mask-data" type="text" name="dataVencimento" size="10" value="${Lancamento.dataVencimentoStr}"/>
 				    </td>
 				</tr>
 				<tr>
 					<td>				    
-				    	<LABEL accessKey=6 for=dataRealizacao>Data Realização:</LABEL>
+				    	<LABEL accessKey=6 for=dataRealizada>Data Pagamento:</LABEL>
 				    </td>
 				    <td align="left"> 
-				    	<input class="mask-data" type="text" name="dataRealizacao" size="10" value="${Lancamento.dataRealizacao}"/>
+				    	
+				    	<input class="mask-data" type="text" name="dataRealizada" size="10" value="${Lancamento.dataRealizadaStr}"/>
 				    </td>
 				</tr>
 				<tr>    			
@@ -118,7 +143,8 @@
 		    			<LABEL accessKey=7 for=valor>Valor:</LABEL>
 		    		</td>
 		    		<td align="left"> 
-		    			<input id=numero type="text" name="valor" size="10" value="${Lancamento.valor}"/>
+		    			<fmt:formatNumber var="valor" pattern="#,##0.00">${Lancamento.valor}</fmt:formatNumber>
+		    			<input id="mask-number" class="direita" type="text" name="valor" size="10" value="${valor}"/>
 		    		</td>
 		    	</tr>	 
 		    	<tr>    			
@@ -126,24 +152,27 @@
 		    			<LABEL accessKey=8 for=observacao>Observação:</LABEL>
 		    		</td>
 		    		<td align="left"> 
-		    			<textarea name="observacao" rows="5" cols="50" value="${Lancamento.observacao}"></textarea>		    			
+		    			<textarea name="observacao" rows="5" cols="50">${Lancamento.observacao}</textarea>		    			
 		    		</td>
 		    	</tr>	   	
 				
     		</table>
-			<table align="right">
+			<table align="right" class="normal">
     			<tr>
 					<td>
 				    	<input type="hidden" name="nroLancamento" value="${Lancamento.nroLancamento}" />
-				    	<BUTTON class=botao name=gravar type=submit>Gravar</BUTTON>
-				    	<BUTTON class=botao name=cancelar type=reset>Cancelar</BUTTON>
-				    	<A class=botao href="home.jsp">Voltar</A>
+				    	<input type="hidden" name="idUsuario" value="${login}" />
+				    	<input type="hidden" name="mesAtual" value="${mesAtual}" />
+				    	<input type="hidden" name="anoAtual" value="${anoAtual}" />
+				    	<BUTTON class=botao name=gravar type=submit>Confirmar Edição</BUTTON>
+				    	<A class=botao href="ListarLancamento?idUsuario=${login}&mesAtual=${mesAtual}&anoAtual=${anoAtual}">Cancelar</A>
 				    </td>				    
 				</tr>
 			</table> 
 		</FIELDSET>
 	</form>
-		
+	</c:forEach>
+	</div>	
     </jsp:body>
     </c:if>
 </layout:page>

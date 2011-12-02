@@ -87,6 +87,32 @@ public class FornecedorDAO {
 		return fornecedor;
 	}
 
+	public Fornecedor listarUnico(String nome) {
+		Fornecedor fornecedor = new Fornecedor();
+		String sql = "SELECT * FROM Fornecedor " 
+		          + " WHERE nome = ?";
+
+		try {
+			Conecta conn = Conecta.getInstance();
+			Connection conexao = conn.getConnection();
+			PreparedStatement stmt = conexao.prepareStatement(sql);
+			stmt.setString(1, nome);
+
+			ResultSet rs = stmt.executeQuery();
+
+			rs.next();
+
+			fornecedor.setCodFornecedor(rs.getInt("codFornecedor"));			
+			fornecedor.setNome(rs.getString("nome"));
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return fornecedor;
+	}
+
 	public List<Fornecedor> getLista() {
 		ArrayList<Fornecedor> fornecedors = new ArrayList<Fornecedor>();
 		String sql = "SELECT * FROM Fornecedor";

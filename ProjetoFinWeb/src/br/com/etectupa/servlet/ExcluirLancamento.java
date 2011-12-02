@@ -19,16 +19,29 @@ public class ExcluirLancamento extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		int nroLancamento = Integer.parseInt(request.getParameter("nroLancamento"));
-		String pagina = "listarLancamento.jsp";
+		String idUsuario = request.getParameter("idUsuario");
+		
+		int mesAtual = 0;
+		int anoAtual = 0;
+		
+		if (request.getParameter("mesAtual") != null && !request.getParameter("mesAtual").equals("")){
+			mesAtual = Integer.parseInt(request.getParameter("mesAtual"));
+		}
+		if (request.getParameter("anoAtual") != null && !request.getParameter("anoAtual").equals("")){
+			anoAtual = Integer.parseInt(request.getParameter("anoAtual"));
+		}
 
 		LancamentoDAO lancamentoDao = new LancamentoDAO();
 
 		lancamentoDao.excluir(nroLancamento);
 
 		request.setAttribute("msg", "Lancamento excluído com sucesso!");
+		request.setAttribute( "mesAtual", mesAtual);
+		request.setAttribute( "anoAtual", anoAtual);
+		request.setAttribute("idUsuario",idUsuario);
 
-		request.getRequestDispatcher(pagina).forward(request,
-				response);
+		ListarLancamento listarLancamento = new ListarLancamento();
+		listarLancamento.doGet(request, response);
 	}
 
 }

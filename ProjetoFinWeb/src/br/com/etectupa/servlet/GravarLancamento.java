@@ -32,6 +32,16 @@ public class GravarLancamento extends HttpServlet {
 		String observacao = "";
 		String msg = "";
 		String pagina = "cadLancamento.jsp";
+
+		int mesAtual = 0;
+		int anoAtual = 0;
+		
+		if (request.getParameter("mesAtual") != null && !request.getParameter("mesAtual").equals("")){
+			mesAtual = Integer.parseInt(request.getParameter("mesAtual"));
+		}
+		if (request.getParameter("anoAtual") != null && !request.getParameter("anoAtual").equals("")){
+			anoAtual = Integer.parseInt(request.getParameter("anoAtual"));
+		}
 		
 		if (request.getParameter("codConta") == null
 				|| Integer.parseInt(request.getParameter("codConta")) == 0) {
@@ -116,6 +126,9 @@ public class GravarLancamento extends HttpServlet {
 			request.setAttribute("msg", msg);
 		}
 
+		request.setAttribute( "mesAtual", mesAtual);
+		request.setAttribute( "anoAtual", anoAtual);
+		
 		request.getRequestDispatcher(pagina).forward(request, response);
 	
 	}

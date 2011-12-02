@@ -3,39 +3,37 @@
 <%@ taglib tagdir="/WEB-INF/tags/layout" prefix="layout" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
-
-<layout:page usuario="${login}" title="Cadastro de Grupo" description="Cadastro de Grupo" keywords="grupo">
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+<%@ page import="br.com.etectupa.displaytag.collection.ListGrupo" %>
+<%
+request.setAttribute( "listGrupo", new ListGrupo() );
+%>
+<layout:page usuario="${login}" title="Grupos de Despesas/Receitas" description="Grupos de Despesas/Receitas" keywords="grupo">
+	<c:if test="${login == null}">
+		<c:redirect url="index.jsp"/>
+	</c:if>
     <c:if test="${login != null}">
     <jsp:body>
-	<jsp:useBean id="dao" class="br.com.etectupa.dao.GrupoDAO" />
+    <div id="content">
 	<c:if test="${msg != null}">
-	${msg}
+	<p class="msg">${msg}</p>
 	</c:if>
 	<FIELDSET>
-		<LEGEND>Cadastro de Grupos</LEGEND>
-	<table id="tablesordem" class="tablesorter" border="0" cellpadding="0" cellspacing="1">
-	        <thead>
-	        <tr>
-				<th>Código</th>
-				<th>Descrição</th>
-				<th align="center" >Editar</th>
-				<th align="center" >Excluir</th>
-			</tr>
-			</thead>
-			<tbody>
-			
-		<c:forEach var="grupos" items="${dao.lista}" varStatus="id">
-			<tr bgcolor="#${id.count % 2 == 0 ? 'e6EEEE' : 'ffffff' }">
-				<td>${grupos.codGrupo}</td>
-				<td>${grupos.descricao}</td>
-				<td align="center" ><a class="botao1" href="EditarGrupo?codGrupo=${grupos.codGrupo}">Editar</a></td>
-				<td align="center" ><a class="botao1" href="ExcluirGrupo?codGrupo=${grupos.codGrupo}">Excluir</a></td>
-			</tr>
-			</tbody>
-			
-		</c:forEach>
-	</table>	
-	</FIELDSET>
+		<LEGEND>Grupos de Despesas/Receitas</LEGEND>
+		<br/>
+		<div align="right">
+		<A class=botao href="cadGrupo.jsp">Novo</A>
+		</div>
+		
+		<display:table name="listGrupo" export="false" sort="list" pagesize="8">
+		    <display:column property="codGrupo" title="Código" group="1" sortable="true" headerClass="sortable"  href="ConsultaDadosGrupo" paramId="codGrupo" paramProperty="codGrupo"/>
+		    <display:column property="descricao" title="Descrição" group="2" sortable="true" headerClass="sortable"  href="ConsultaDadosGrupo" paramId="codGrupo" paramProperty="codGrupo"/>
+		    <display:column title="Editar" href="EditarGrupo" paramId="codGrupo" paramProperty="codGrupo" >Editar</display:column>
+		    <display:column title="Excluir" href="ExcluirGrupo" paramId="codGrupo" paramProperty="codGrupo" >Excluir</display:column>
+		    
+		  </display:table>
+		 </FIELDSET>
+		 </div>
 </jsp:body>
 </c:if>
 </layout:page>

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.etectupa.dao.GrupoDAO;
+import br.com.etectupa.validation.ValidaGrupo;
 
 public class ExcluirGrupo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -20,12 +21,26 @@ public class ExcluirGrupo extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		int codGrupo = Integer.parseInt(request.getParameter("codGrupo"));
 		String pagina = "listarGrupo.jsp";
+		String msg = "";
+		
+		if (ValidaGrupo.grupoUtilizado(codGrupo)){
+			msg = "Grupo possui conta cadastrada e não pode ser excluído.";
+		}
+		
+		if (msg.equals("")) {
+			GrupoDAO grupoDao = new GrupoDAO();
+			
+			try {
+				grupoDao.excluir(codGrupo);
+				msg = "Exclusão realizada com sucesso!";
 
-		GrupoDAO grupoDao = new GrupoDAO();
-
-		grupoDao.excluir(codGrupo);
-
-		request.setAttribute("msg", "Grupo excluído com sucesso!");
+			} catch (Exception e) {
+				msg = e.getMessage();
+			}
+			request.setAttribute("msg", msg);
+		} else {
+			request.setAttribute("msg", msg);
+		}
 
 		request.getRequestDispatcher(pagina).forward(request,
 				response);

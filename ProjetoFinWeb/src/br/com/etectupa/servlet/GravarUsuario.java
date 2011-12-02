@@ -12,6 +12,8 @@ import br.com.etectupa.dao.UsuarioDAO;
 import br.com.etectupa.model.Usuario;
 import br.com.etectupa.util.Convert;
 import br.com.etectupa.util.Criptografia;
+import br.com.etectupa.validation.ValidaConta;
+import br.com.etectupa.validation.ValidaUsuario;
 
 public class GravarUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,7 +30,7 @@ public class GravarUsuario extends HttpServlet {
 		String email = "";
 		Date dataNascimento = null;
 		String msg = "";
-		String pagina = "cadastroUsuario.jsp";
+		String pagina = "cadUsuario.jsp";
 
 		if (request.getParameter("idUsuario") == null || request.getParameter("idUsuario").equals(""))  {
 			msg = "Informe a identificação do usuário";			
@@ -59,6 +61,10 @@ public class GravarUsuario extends HttpServlet {
 			dataNascimento = Convert.StrToDateSql(request.getParameter("dataNascimento"));
 		}
 
+		if (ValidaUsuario.existeUsuario(idUsuario)){
+			msg = "Usuário já cadastrado.";
+		}
+		
 		if (msg.equals("")) {
 			String senhaCript = Criptografia.criptografar(senha);
 

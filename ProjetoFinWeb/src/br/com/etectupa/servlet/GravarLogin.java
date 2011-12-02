@@ -12,6 +12,7 @@ import br.com.etectupa.dao.UsuarioDAO;
 import br.com.etectupa.model.Usuario;
 import br.com.etectupa.util.Convert;
 import br.com.etectupa.util.Criptografia;
+import br.com.etectupa.validation.ValidaUsuario;
 
 public class GravarLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -57,6 +58,10 @@ public class GravarLogin extends HttpServlet {
 			msg = "Informe a data de nascimento do usuário";
 		} else {
 			dataNascimento = Convert.StrToDateSql(request.getParameter("dataNascimento"));
+		}
+
+		if (ValidaUsuario.existeUsuario(idUsuario)){
+			msg = "Usuário já cadastrado.";
 		}
 
 		if (msg.equals("")) {

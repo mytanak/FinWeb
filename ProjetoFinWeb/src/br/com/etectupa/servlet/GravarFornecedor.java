@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.com.etectupa.dao.FornecedorDAO;
 import br.com.etectupa.model.Fornecedor;
+import br.com.etectupa.validation.ValidaFornecedor;
 
 public class GravarFornecedor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,6 +29,10 @@ public class GravarFornecedor extends HttpServlet {
 			msg = "Informe o nome do fornecedor";
 		} else {
 			nome = request.getParameter("nome");
+		}
+
+		if (ValidaFornecedor.existeFornecedor(nome)){
+			msg = "Fornecedor já cadastrado.";
 		}
 
 		if (msg.equals("")) {

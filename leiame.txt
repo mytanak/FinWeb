@@ -1,0 +1,35 @@
+Nome do Projeto:
+FinWeb
+
+Integrantes do Grupo:
+Vinicius Gustavo Castiliani viniciuscastiliani@hotmail.com
+Kely Oyamada kelynhajaponesa@hotmail.com
+Halen Ribeiro Gusman halenconjak@hotmail.com 
+Vanessa de Almeida Santos nessatawa@bol.com.br
+Marcelo Tanaka marcelotanaka@windowslive.com
+
+Estrutura de Desenvolvimento
+Tecnologias Utilizadas:
+Java
+J2EE / Servlet / JSP / JSTL / JQuery / CSS / HTML / JavaScript
+Componentes: DisplayTag / Cewolf
+
+Ferramentas Utilizadas:
+Eclipse versão Indigo
+Apache Tomcat versão 6
+Microsoft SQL Server e Management Studio 2005 Express Edition
+Google chrome
+
+Estrutura de Publicação/Execução
+Criar o banco de dados com o nome "ProjetoWebJava".
+Definir o usuário e senha de acesso ao banco de dados desejados ou definir o usuário e senha padrão: usuario "ProjetoWebJava" e senha "@PosJava2011".
+Criar a estrutura do Banco de dados executando o script "EstruturaSistema.sql"
+Efetuar a configuração de servidor Tomcat na ferramenta Eclipse.
+Efetuar a importação do projeto em um WorkSpace através da ferramenta Eclipse da pasta "ProjetoFinWeb".
+Caso as informações de conexão com o banco de dados não seja padrão, atualizar as informações de conexão com o banco de dados em "ProjetoFinWeb > Java Resources > src > br.com.etectupa.util" efetuando duplo clique sobre o arquivo "bd.properties".
+Clicar sobre o projeto importado com o botão direito do mouse selecionar a opção "Run As" > "Run on Server".
+Abrir o navergador "Google chrome" e acessar o endereço do servidor "http://localhost:8080/ProjetoFinWeb/".
+Acesso padrão:
+Usuário: "Admin" 
+Senha: "admin"
+

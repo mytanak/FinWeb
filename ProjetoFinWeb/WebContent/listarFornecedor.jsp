@@ -2,38 +2,37 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib tagdir="/WEB-INF/tags/layout" prefix="layout" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<layout:page usuario="${login}" title="Listar Fornecedor" description="Cadastro de Fornecedor" keywords="fornecedor">
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+<%@ page import="br.com.etectupa.displaytag.collection.ListFornecedor" %>
+
+<%
+request.setAttribute( "listFornecedor", new ListFornecedor());
+%>
+<layout:page usuario="${login}" title="Fornecedores" description="Fornecedores" keywords="fornecedor">
+	<c:if test="${login == null}">
+		<c:redirect url="index.jsp"/>
+	</c:if>
     <c:if test="${login != null}">
     <jsp:body>
-	<jsp:useBean id="dao" class="br.com.etectupa.dao.FornecedorDAO" />
+    <div id="content">
 	<c:if test="${msg != null}">
-	${msg}
+	<p class="msg">${msg}</p>
 	</c:if>
-	<FIELDSET>
-		<LEGEND>Cadastro de Fornecedor</LEGEND>
-	<table id="tablesordem" class="tablesorter" border="0" cellpadding="0" cellspacing="1">
-	        <thead>
-	        <tr>
-				<th>Código</th>
-				<th>Nome</th>
-				<th>Editar</th>
-				<th>Excluir</th>
-			</tr>
-			</thead>
-			<tbody>
-			
-		<c:forEach var="fornecedor" items="${dao.lista}" varStatus="id">
-			<tr bgcolor="#${id.count % 2 == 0 ? 'e6EEEE' : 'ffffff' }">
-				<td>${fornecedor.codFornecedor}</td>
-				<td>${fornecedor.nome}</td>
-				<td align="center" ><a class="botao1" href="EditarFornecedor?codFornecedor=${fornecedor.codFornecedor}">Editar</a></td>
-				<td align="center" ><a class="botao1" href="ExcluirFornecedor?codFornecedor=${fornecedor.codFornecedor}">Excluir</a></td>
-			</tr>
-			</tbody>
-			
-		</c:forEach>
-	</table>	
-	</FIELDSET>
+		<FIELDSET>
+		<LEGEND>Fornecedores</LEGEND>
+		<br/>
+		<div align="right">
+		<A class=botao href="cadFornecedor.jsp">Novo</A>
+		</div>		
+		<display:table name="listFornecedor" export="false" sort="list" pagesize="8">
+		    <display:column property="codFornecedor" title="Código" group="1" sortable="true" headerClass="sortable" href="ConsultaDadosFornecedor" paramId="codFornecedor" paramProperty="codFornecedor"/>
+		    <display:column property="nome" title="Nome" group="2" sortable="true" headerClass="sortable"  href="ConsultaDadosFornecedor" paramId="codFornecedor" paramProperty="codFornecedor"/>
+		    <display:column title="Editar" href="EditarFornecedor" paramId="codFornecedor" paramProperty="codFornecedor" >Editar</display:column>
+		    <display:column title="Excluir" href="ExcluirFornecedor" paramId="codFornecedor" paramProperty="codFornecedor" >Excluir</display:column>
+		    
+		  </display:table>
+		  </FIELDSET>	
+	</div>
 </jsp:body>
 </c:if>
 </layout:page>

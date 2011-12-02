@@ -3,45 +3,42 @@
 <%@ taglib tagdir="/WEB-INF/tags/layout" prefix="layout" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+<%@ page import="br.com.etectupa.displaytag.collection.ListUsuario" %>
 
-<layout:page usuario="${login}" title="Cadastro de Usuario" description="Cadastro de Conta" keywords="conta">
+<%
+request.setAttribute( "listUsuario", new ListUsuario() );
+%>
+
+<layout:page usuario="${login}" title="Usuários" description="Usuários" keywords="usuário">
+	<c:if test="${login == null}">
+		<c:redirect url="index.jsp"/>
+	</c:if>
     <c:if test="${login != null}">
     <jsp:body>
-	<jsp:useBean id="dao" class="br.com.etectupa.dao.UsuarioDAO" />
+    <div id="content">
 	<c:if test="${msg != null}">
-	${msg}
+	<p class="msg">${msg}</p>
 	</c:if>
-	<FIELDSET>
-		<LEGEND>Cadastro de Usuarios</LEGEND>
-	<table id="tablesordem" class="tablesorter" border="0" cellpadding="0" cellspacing="1">
-	        <thead>
-	        <tr>
-				<th>Código</th>
-				<th>Identificação</th>
-				<th>Nome</th>
-				<th>E-mail</th>
-				<th align="center" >Data Nascimento</th>
-				<th align="center" >Editar</th>
-				<th align="center" >Excluir</th>
-			</tr>
-			</thead>
-			<tbody>
-			
-		<c:forEach var="usuarios" items="${dao.lista}" varStatus="id">
-			<tr bgcolor="#${id.count % 2 == 0 ? 'e6EEEE' : 'ffffff' }">
-				<td>${usuarios.codUsuario}</td>
-				<td>${usuarios.idUsuario}</td>
-				<td>${usuarios.nome}</td>
-				<td>${usuarios.email}</td>
-				<td align="center" >${usuarios.dataNascimento}</td>
-				<td align="center" ><a class="botao1" href="EditarUsuario?codUsuario=${usuarios.codUsuario}">Editar</a></td>
-				<td align="center" ><a class="botao1" href="ExcluirUsuario?codUsuario=${usuarios.codUsuario}">Excluir</a></td>
-			</tr>
-			</tbody>
-			
-		</c:forEach>
-	</table>	
-	</FIELDSET>
-</jsp:body>
-</c:if>
+		<FIELDSET>
+		<LEGEND>Usuários</LEGEND>
+		<br/>
+		<div align="right">
+		<A class=botao href="cadUsuario.jsp">Novo</A>
+		</div>
+		
+		<display:table name="listUsuario" export="false" sort="list" pagesize="8">
+		    <display:column property="codUsuario" title="Código" group="1" sortable="true" headerClass="sortable" />
+		    <display:column property="idUsuario" title="Identificação" group="2" sortable="true" headerClass="sortable" />
+		    <display:column property="nome" title="Nome" group="2" sortable="true" headerClass="sortable" />
+		    <display:column property="email" title="E-mail" autolink="true"/>
+		    <display:column property="dataNascimento" title="Data Nascimento" format="{0,date,dd/MM/yyyy}" />  	  
+		    <display:column title="Editar" href="EditarUsuario" paramId="codUsuario" paramProperty="codUsuario" >Editar</display:column>
+		    <display:column title="Excluir" href="ExcluirUsuario" paramId="codUsuario" paramProperty="codUsuario" >Excluir</display:column>
+		    
+		  </display:table>
+		  </FIELDSET>
+		  </div>
+	</jsp:body>		
+	</c:if>
 </layout:page>

@@ -2,17 +2,21 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib tagdir="/WEB-INF/tags/layout" prefix="layout" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<layout:page usuario="${login}" title="Edição de Despesas e Receitas" description="Editar de Despesas e Receitas" keywords="despesas, receitas">
+<layout:page usuario="${login}" title="Editar Despesa/Receita" description="Editar Despesa/Receita" keywords="despesas, receitas">
+	<c:if test="${login == null}">
+		<c:redirect url="index.jsp"/>
+	</c:if>
     <c:if test="${login != null}">
     <jsp:body>
-    <c:if test="${msg != null}">
-    ${msg}
-    </c:if>
+    <div id="content">
+	<c:if test="${msg != null}">
+	<p class="msg">${msg}</p>
+	</c:if>
     <jsp:useBean id="dao" class="br.com.etectupa.dao.GrupoDAO" />
-    <form name="operacao" action="ConfirmarEditarOperacao" method="post">
+    <form id="formOperacao" name="operacao" action="ConfirmarEditarOperacao" method="post">
 		<FIELDSET>
-		<LEGEND>Edição de Despesas e Receitas</LEGEND>
-			<table>
+		<LEGEND>Editar Despesa/Receita</LEGEND>
+			<table class="normal">
 				<tr>
 					<td>
     					<LABEL accessKey=1 for=descricao>Descrição:</LABEL>
@@ -56,19 +60,18 @@
     				</td>
     			</tr>			
     		</table>
-			<table align="right">
+			<table align="right" class="normal">
     			<tr>
 					<td>
 				    	<input type="hidden" name="codOperacao" value="${Operacao.codOperacao}" />
-				    	<BUTTON class=botao name=gravar type=submit>Gravar</BUTTON>
-				    	<BUTTON class=botao name=cancelar type=reset>Cancelar</BUTTON>
-				    	<A class=botao href="home.jsp">Voltar</A>
+				    	<BUTTON class=botao name=gravar type=submit>Confirmar Edição</BUTTON>
+				    	<A class=botao href="listarOperacao.jsp">Cancelar</A>
 				    </td>				    
 				</tr>
 			</table> 
 		</FIELDSET>
 	</form>
-		
+	</div>	
     </jsp:body>
     </c:if>
 </layout:page>

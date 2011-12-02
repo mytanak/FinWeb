@@ -2,17 +2,21 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib tagdir="/WEB-INF/tags/layout" prefix="layout" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<layout:page usuario="${login}" title="Cadastro de Despesas e Receitas" description="Cadastro de Despesas e Receitas" keywords="despesas, receitas">
+<layout:page usuario="${login}" title="Cadastrar Despesa/Receita" description="Cadastrar Despesa/Receita" keywords="despesas, receitas">
+	<c:if test="${login == null}">
+		<c:redirect url="index.jsp"/>
+	</c:if>
     <c:if test="${login != null}">
     <jsp:body>
-    <c:if test="${msg != null}">
-    ${msg}
-    </c:if>
+    <div id="content">
+	<c:if test="${msg != null}">
+	<p class="msg">${msg}</p>
+	</c:if>
     <jsp:useBean id="dao" class="br.com.etectupa.dao.GrupoDAO" />
-    <form name="operacao" action="GravarOperacao" method="post">
+    <form id="formOperacao" name="operacao" action="GravarOperacao" method="post">
 		<FIELDSET>
-		<LEGEND>Cadastro de Despesas e Receitas</LEGEND>
-			<table>
+		<LEGEND>Cadastrar Despesa/Receita</LEGEND>
+			<table class="normal">
 				<tr>
 					<td>
     					<LABEL accessKey=1 for=descricao>Descrição:</LABEL>
@@ -39,7 +43,7 @@
     				</td>
     				<td align="left"> 
     					<select name="codGrupo">
-							<option value="0" SELECTED>Escolha</option>
+							<option value="" SELECTED>Escolha</option>
 							<c:forEach var="grupos" items="${dao.lista}" varStatus="id">
 								<option value="${grupos.codGrupo}">${grupos.descricao}</option>
 							</c:forEach>
@@ -47,18 +51,18 @@
     				</td>
     			</tr>			
     		</table>
-			<table align="right">
+			<table align="right" class="normal">
     			<tr>
 					<td>
 				    	<BUTTON class=botao name=gravar type=submit>Gravar</BUTTON>
-				    	<BUTTON class=botao name=cancelar type=reset>Cancelar</BUTTON>
-				    	<A class=botao href="home.jsp">Voltar</A>
+				    	<BUTTON class=botao name=limpar type=reset>Limpar</BUTTON>
+				    	<A class=botao href="listarOperacao.jsp">Cancelar</A>
 				    </td>				    
 				</tr>
 			</table> 
 		</FIELDSET>
 	</form>
-		
+	</div>	
     </jsp:body>
     </c:if>
 </layout:page>
